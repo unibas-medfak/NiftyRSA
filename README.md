@@ -3,7 +3,7 @@ NiftyRSA
 
 **Public key RSA encryption in Swift.**
 
-Renamed fork of the SwiftyRSA (https://github.com/TakeScoop/SwiftyRSA) project which is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://itunes.apple.com/us/app/scoop-easy-custom-carpooling/id997978145?mt=8) to encrypt driver license numbers before submitting them to Checkr through theire API.
+Renamed fork of the SwiftyRSA (https://github.com/TakeScoop/SwiftyRSA) project which is used in the [Scoop](https://www.takescoop.com/) [iOS app](https://itunes.apple.com/us/app/scoop-easy-custom-carpooling/id997978145?mt=8) to encrypt driver license numbers before submitting them to Checkr through their API.
 
 Quick Start
 -----------

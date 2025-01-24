@@ -48,7 +48,7 @@ extension NSInteger {
 
             for octet in 1...octets {
                 result = (result << 8)
-                result = result + UInt64(octetBytes[startIdx + octet])
+                result += UInt64(octetBytes[startIdx + octet])
             }
 
             startIdx += 1 + octets
@@ -123,7 +123,7 @@ extension Data {
             return false
         }
 
-        guard case .objectIdentifier(_) = firstNode[0] else {
+        guard case .objectIdentifier = firstNode[0] else {
             return false
         }
 
