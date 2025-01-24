@@ -23,7 +23,6 @@ do {
     
     let base64String = encrypted.base64String
     print(base64String)
-
 } catch {
     print(error)
 }
