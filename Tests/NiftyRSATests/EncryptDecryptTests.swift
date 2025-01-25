@@ -49,23 +49,21 @@ class EncryptDecryptTests: XCTestCase {
         XCTAssertEqual(decrypted.data, data)
     }
 
-    // See https://github.com/TakeScoop/NiftyRSA/issues/135
-    //    func test_noPadding() throws {
-    //
-    //        let data = TestUtils.randomData(count: 128)
-    //        let clearMessage = ClearMessage(data: data)
-    //        let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: [])
-    //
-    //        let clearMessage2 = ClearMessage(data: encrypted.data)
-    //        let encrypted2 = try clearMessage2.encrypted(with: publicKey, algorithm: [])
-    //
-    //        XCTAssertEqual(data.count, encrypted.data.count)
-    //        XCTAssertEqual(data.count, encrypted2.data.count)
-    //
-    //        let decrypted = try encrypted.decrypted(with: privateKey, algorithm: [])
-    //
-    //        XCTAssertEqual(decrypted.data, data)
-    //    }
+    func test_noPadding() throws {
+        let data = TestUtils.randomData(count: 128)
+        let clearMessage = ClearMessage(data: data)
+        let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionRaw)
+
+        let clearMessage2 = ClearMessage(data: encrypted.data)
+        let encrypted2 = try clearMessage2.encrypted(with: publicKey, algorithm: .rsaEncryptionRaw)
+
+        XCTAssertEqual(data.count, encrypted.data.count)
+        XCTAssertEqual(data.count, encrypted2.data.count)
+
+        let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionRaw)
+
+        XCTAssertEqual(decrypted.data, data)
+    }
 
     func test_OAEP() throws {
         let data = TestUtils.randomData(count: byteLimitForOAEP)
