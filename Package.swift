@@ -18,7 +18,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NiftyRSA"
+            name: "NiftyRSA",
+            resources: [
+                .process("Resources/PrivacyInfo.xcprivacy")
+            ]
         ),
         .testTarget(
             name: "NiftyRSATests",
