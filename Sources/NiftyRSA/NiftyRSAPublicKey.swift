@@ -49,7 +49,6 @@ public class NiftyRSAPublicKey: Key {
     /// Data of the public key as returned by the keychain.
     /// This method throws if NiftyRSA cannot extract data from the key.
     ///
-    /// - Returns: Data of the public key as returned by the keychain.
     /// - Throws: NiftyRSAError
     required public init(data: Data) throws {
         let tag = UUID().uuidString
