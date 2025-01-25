@@ -54,13 +54,13 @@ final class NiftyRSAErrorTests: XCTestCase {
             case .tagEncodingFailed:
                 XCTAssertEqual($0.localizedDescription, "Couldn't create tag data for key")
             case .asn1ParsingFailed:
-                XCTAssertEqual($0.localizedDescription, "Couldn't parse the ASN1 key data. Please file a bug at https://goo.gl/y67MW6")
+                XCTAssertEqual($0.localizedDescription, "Couldn't parse the ASN1 key data. Please file a bug at https://github.com/unibas-medfak/NiftyRSA/issues")
             case .invalidAsn1RootNode:
                 XCTAssertEqual($0.localizedDescription, "Couldn't parse the provided key because its root ASN1 node is not a sequence. The key is probably corrupt")
             case .invalidAsn1Structure:
                 XCTAssertEqual($0.localizedDescription, "Couldn't parse the provided key because it has an unexpected ASN1 structure")
             case .invalidBase64String:
-                XCTAssertEqual($0.localizedDescription, "The provided string is not a valid Base 64 string")
+                XCTAssertEqual($0.localizedDescription, "The provided string is not a valid Base64 string")
             case .decryptFailed(let error):
                 XCTAssertEqual($0.localizedDescription, "Couldn't decrypt data: CFError \(String(describing: error))")
             case .encryptFailed(let error):
