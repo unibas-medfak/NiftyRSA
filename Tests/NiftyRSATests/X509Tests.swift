@@ -101,10 +101,10 @@ class X509CertificateTests: XCTestCase {
         let publicKeyX509 = try NiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
 
         let clear = "Hello world !"
-        let clearMessage = try ClearMessage(string: clear, using: .utf8)
+        let clearMessage = try ClearMessage(string: clear)
 
-        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509))
+        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509))
 
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), clear)
     }
@@ -119,10 +119,10 @@ class X509CertificateTests: XCTestCase {
         let publicKeyX509 = try NiftyRSA.prependX509KeyHeader(keyData: publicKeyData)
 
         let clear = [String](repeating: "a", count: 99).joined(separator: "")
-        let clearMessage = try ClearMessage(string: clear, using: .utf8)
+        let clearMessage = try ClearMessage(string: clear)
 
-        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509))
+        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509))
 
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), clear)
     }
@@ -139,8 +139,8 @@ class X509CertificateTests: XCTestCase {
         let data = TestUtils.randomData(count: byteLimitForPKCS1)
         let clearMessage = ClearMessage(data: data)
 
-        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509), algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509), algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: NiftyRSAPublicKey(data: publicKeyX509))
+        let decrypted = try encrypted.decrypted(with: NiftyRSAPrivateKey(data: privateKeyX509))
 
         XCTAssertEqual(decrypted.data, data)
     }

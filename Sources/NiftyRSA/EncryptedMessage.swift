@@ -27,7 +27,7 @@ public class EncryptedMessage: Message {
     ///   - algorithm: Algorithm to use during the decryption
     /// - Returns: Clear message
     /// - Throws: NiftyRSAError
-    public func decrypted(with key: NiftyRSAPrivateKey, algorithm: Algorithm) throws -> ClearMessage {
+    public func decrypted(with key: NiftyRSAPrivateKey, algorithm: Algorithm = .rsaEncryptionPKCS1) throws -> ClearMessage {
         var error: Unmanaged<CFError>?
         let decryptedData = SecKeyCreateDecryptedData(key.reference, algorithm, data as CFData, &error)
         guard let decryptedData else {

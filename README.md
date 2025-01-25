@@ -15,8 +15,8 @@ do {
     let publicKey = try NiftyRSAPublicKey(pemNamed: "public")
 
     let str = "Clear String"
-    let clear = try ClearMessage(string: str, using: .utf8)
-    let encrypted = try clear.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
+    let clear = try ClearMessage(string: str)
+    let encrypted = try clear.encrypted(with: publicKey)
 
     let data = encrypted.data
     print(data)
@@ -33,7 +33,7 @@ do {
 ```swift
 let privateKey = try NiftyRSAPrivateKey(pemNamed: "private")
 let encrypted = try EncryptedMessage(base64Encoded: "AAA===")
-let clear = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+let clear = try encrypted.decrypted(with: privateKey)
 
 // Then you can use:
 let data = clear.data
@@ -94,7 +94,7 @@ let privateKey = try NiftyRSAPrivateKey(reference: secKey)
 ```swift
 let str = "Clear Text"
 let clear = try ClearMessage(string: str, using: .utf8)
-let encrypted = try clear.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
+let encrypted = try clear.encrypted(with: publicKey)
 
 let data = encrypted.data
 let base64String = encrypted.base64Encoded
@@ -104,7 +104,7 @@ let base64String = encrypted.base64Encoded
 
 ```swift
 let encrypted = try EncryptedMessage(base64Encoded: base64String)
-let clear = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+let clear = try encrypted.decrypted(with: privateKey)
 
 let data = clear.data
 let base64String = clear.base64Encoded
@@ -116,7 +116,7 @@ let string = try clear.string(using: .utf8)
 NiftyRSA can sign data with a private key. NiftyRSA will calculate a SHA digest of the supplied `String`/`Data` and use this to generate the digital signature.
 
 ```swift
-let clear = try ClearMessage(string: "Clear Text", using: .utf8)
+let clear = try ClearMessage(string: "Clear Text")
 let signature = clear.signed(with: privateKey, digestType: .sha1)
 
 let data = signature.data

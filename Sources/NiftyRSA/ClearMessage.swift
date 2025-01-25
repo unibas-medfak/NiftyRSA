@@ -26,7 +26,7 @@ public class ClearMessage: Message {
     ///   - string: String value of the clear message
     ///   - encoding: Encoding to use to generate the clear data
     /// - Throws: NiftyRSAError
-    public convenience init(string: String, using encoding: String.Encoding) throws {
+    public convenience init(string: String, using encoding: String.Encoding = .utf8) throws {
         guard let data = string.data(using: encoding) else {
             throw NiftyRSAError.stringToDataConversionFailed
         }
@@ -39,7 +39,7 @@ public class ClearMessage: Message {
     /// - Parameter encoding: Encoding to use during the string conversion
     /// - Returns: String representation of the clear message
     /// - Throws: NiftyRSAError
-    public func string(encoding: String.Encoding) throws -> String {
+    public func string(encoding: String.Encoding = .utf8) throws -> String {
         guard let str = String(data: data, encoding: encoding) else {
             throw NiftyRSAError.dataToStringConversionFailed
         }
@@ -53,7 +53,7 @@ public class ClearMessage: Message {
     ///   - algorithm: Algorithm to use during the encryption
     /// - Returns: Encrypted message
     /// - Throws: NiftyRSAError
-    public func encrypted(with key: NiftyRSAPublicKey, algorithm: Algorithm) throws -> EncryptedMessage {
+    public func encrypted(with key: NiftyRSAPublicKey, algorithm: Algorithm = .rsaEncryptionPKCS1) throws -> EncryptedMessage {
         var error: Unmanaged<CFError>?
         let encryptedData = SecKeyCreateEncryptedData(key.reference, algorithm, data as CFData, &error)
         guard let encryptedData else {

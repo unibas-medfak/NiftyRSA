@@ -242,7 +242,7 @@ class PrivateKeyTests: XCTestCase {
     func test_generateKeyPair() throws {
         let keyPair = try NiftyRSA.generateRSAKeyPair(sizeInBits: 2048, applyUnitTestWorkaround: true)
 
-        let algorithm: SecKeyAlgorithm = .rsaEncryptionOAEPSHA512
+        let algorithm: Algorithm = .rsaEncryptionOAEPSHA512
         guard SecKeyIsAlgorithmSupported(keyPair.privateKey.reference, .decrypt, algorithm) else {
             XCTFail("Key cannot be used for decryption")
             return
@@ -254,10 +254,10 @@ class PrivateKeyTests: XCTestCase {
         }
 
         let str = "Clear Text"
-        let clearMessage = try ClearMessage(string: str, using: .utf8)
+        let clearMessage = try ClearMessage(string: str)
 
-        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey, algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: keyPair.privateKey, algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: keyPair.publicKey)
+        let decrypted = try encrypted.decrypted(with: keyPair.privateKey)
 
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }

@@ -21,20 +21,20 @@ class EncryptDecryptTests: XCTestCase {
 
     func test_simple() throws {
         let str = "Clear Text"
-        let clearMessage = try ClearMessage(string: str, using: .utf8)
+        let clearMessage = try ClearMessage(string: str)
 
-        let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: publicKey)
+        let decrypted = try encrypted.decrypted(with: privateKey)
 
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }
 
     func test_longString() throws {
         let str = [String](repeating: "a", count: 99).joined(separator: "")
-        let clearMessage = try ClearMessage(string: str, using: .utf8)
+        let clearMessage = try ClearMessage(string: str)
 
-        let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: publicKey)
+        let decrypted = try encrypted.decrypted(with: privateKey)
 
         XCTAssertEqual(try? decrypted.string(encoding: .utf8), str)
     }
@@ -43,8 +43,8 @@ class EncryptDecryptTests: XCTestCase {
         let data = TestUtils.randomData(count: byteLimitForPKCS1)
         let clearMessage = ClearMessage(data: data)
 
-        let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-        let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+        let encrypted = try clearMessage.encrypted(with: publicKey)
+        let decrypted = try encrypted.decrypted(with: privateKey)
 
         XCTAssertEqual(decrypted.data, data)
     }
@@ -84,29 +84,29 @@ class EncryptDecryptTests: XCTestCase {
 
         // Encrypt with old public key, decrypt with old private key
         do {
-            let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: publicKey)
+            let decrypted = try encrypted.decrypted(with: privateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with old public key, decrypt with new private key
         do {
-            let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: newPrivateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: publicKey)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with new public key, decrypt with old private key
         do {
-            let encrypted = try clearMessage.encrypted(with: newPublicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: newPublicKey)
+            let decrypted = try encrypted.decrypted(with: privateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with new public key, decrypt with new private key
         do {
-            let encrypted = try clearMessage.encrypted(with: newPublicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: newPrivateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: newPublicKey)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey)
             XCTAssertEqual(decrypted.data, data)
         }
     }
@@ -120,29 +120,29 @@ class EncryptDecryptTests: XCTestCase {
 
         // Encrypt with old public key, decrypt with old private key
         do {
-            let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: publicKey)
+            let decrypted = try encrypted.decrypted(with: privateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with old public key, decrypt with new private key
         do {
-            let encrypted = try clearMessage.encrypted(with: publicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: newPrivateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: publicKey)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with new public key, decrypt with old private key
         do {
-            let encrypted = try clearMessage.encrypted(with: newPublicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: privateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: newPublicKey)
+            let decrypted = try encrypted.decrypted(with: privateKey)
             XCTAssertEqual(decrypted.data, data)
         }
 
         // Encrypt with new public key, decrypt with new private key
         do {
-            let encrypted = try clearMessage.encrypted(with: newPublicKey, algorithm: .rsaEncryptionPKCS1)
-            let decrypted = try encrypted.decrypted(with: newPrivateKey, algorithm: .rsaEncryptionPKCS1)
+            let encrypted = try clearMessage.encrypted(with: newPublicKey)
+            let decrypted = try encrypted.decrypted(with: newPrivateKey)
             XCTAssertEqual(decrypted.data, data)
         }
     }

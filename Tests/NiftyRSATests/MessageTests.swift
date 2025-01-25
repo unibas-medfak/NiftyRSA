@@ -26,13 +26,13 @@ class ClearMessageTests: XCTestCase {
 
     func test_initWithString() {
         let str = "Clear Text"
-        let message = try? ClearMessage(string: str, using: .utf8)
+        let message = try? ClearMessage(string: str)
         XCTAssertNotNil(message)
     }
 
     func test_string() throws {
         let str = "Clear Text"
-        let message = try ClearMessage(string: str, using: .utf8)
+        let message = try ClearMessage(string: str)
         XCTAssertEqual(try? message.string(encoding: .utf8), str)
     }
 
