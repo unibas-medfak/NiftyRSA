@@ -53,13 +53,13 @@ extension NiftyRSAError: LocalizedError {
         case .tagEncodingFailed:
             return "Couldn't create tag data for key"
         case .asn1ParsingFailed:
-            return "Couldn't parse the ASN1 key data. Please file a bug at https://goo.gl/y67MW6"
+            return "Couldn't parse the ASN1 key data. Please file a bug at https://github.com/unibas-medfak/NiftyRSA/issues"
         case .invalidAsn1RootNode:
             return "Couldn't parse the provided key because its root ASN1 node is not a sequence. The key is probably corrupt"
         case .invalidAsn1Structure:
             return "Couldn't parse the provided key because it has an unexpected ASN1 structure"
         case .invalidBase64String:
-            return "The provided string is not a valid Base 64 string"
+            return "The provided string is not a valid Base64 string"
         case .decryptFailed(let error):
             return "Couldn't decrypt data: CFError \(String(describing: error))"
         case .encryptFailed(let error):
