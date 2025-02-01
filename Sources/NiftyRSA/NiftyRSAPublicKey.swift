@@ -60,6 +60,31 @@ public class NiftyRSAPublicKey: Key {
         reference = try NiftyRSA.addKey(dataWithoutHeader, isPublic: true, tag: tag)
     }
 
+    convenience init(base64EncodedX509Certificate base64String: String) throws {
+        guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
+            throw NiftyRSAError.invalidBase64String
+        }
+
+        guard let certificate = SecCertificateCreateWithData(nil, data as CFData) else {
+            throw NiftyRSAError.x509CertificateFailed
+        }
+
+        let policy = SecPolicyCreateBasicX509()
+        var secTrust: SecTrust?
+
+        SecTrustCreateWithCertificates(certificate, policy, &secTrust)
+
+        guard let secTrust else {
+            throw NiftyRSAError.x509CertificateFailed
+        }
+
+        guard let keyReference = SecTrustCopyKey(secTrust) else {
+            throw NiftyRSAError.x509CertificateFailed
+        }
+
+        try self.init(reference: keyReference)
+    }
+
     static let publicKeyRegex: NSRegularExpression? = {
         let publicKeyRegex = "(-----BEGIN PUBLIC KEY-----.+?-----END PUBLIC KEY-----)"
         return try? NSRegularExpression(pattern: publicKeyRegex, options: .dotMatchesLineSeparators)

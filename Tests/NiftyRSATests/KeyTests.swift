@@ -55,6 +55,15 @@ class PublicKeyTests: XCTestCase {
         XCTAssertNotNil(publicKey)
     }
 
+    func test_initWithX509Base64String() throws {
+        guard let path = bundle.path(forResource: "base64-X509-public-key", ofType: "txt") else {
+            return XCTFail("file not found in bundle")
+        }
+        let str = try String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8)
+        let publicKey = try? NiftyRSAPublicKey(base64EncodedX509Certificate: str)
+        XCTAssertNotNil(publicKey)
+    }
+
     func test_initWithBase64StringWhichContainsNewLines() throws {
         guard let path = bundle.path(forResource: "niftyrsa-public-base64-newlines", ofType: "txt") else {
             return XCTFail("file not found in bundle")
