@@ -60,7 +60,7 @@ public class NiftyRSAPublicKey: Key {
         reference = try NiftyRSA.addKey(dataWithoutHeader, isPublic: true, tag: tag)
     }
 
-    convenience init(base64EncodedX509Certificate base64String: String) throws {
+    public convenience init(base64EncodedX509Certificate base64String: String) throws {
         guard let data = Data(base64Encoded: base64String, options: [.ignoreUnknownCharacters]) else {
             throw NiftyRSAError.invalidBase64String
         }

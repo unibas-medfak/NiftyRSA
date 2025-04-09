@@ -23,11 +23,28 @@ public class EncryptedMessage: Message {
     /// Decrypts an encrypted message with a private key and returns a clear message.
     ///
     /// - Parameters:
-    ///   - key: Private key to decrypt the mssage with
+    ///   - key: Private key to decrypt the message with
     ///   - algorithm: Algorithm to use during the decryption
     /// - Returns: Clear message
     /// - Throws: NiftyRSAError
     public func decrypted(with key: NiftyRSAPrivateKey, algorithm: Algorithm = .rsaEncryptionPKCS1) throws -> ClearMessage {
+        var error: Unmanaged<CFError>?
+        let decryptedData = SecKeyCreateDecryptedData(key.reference, algorithm, data as CFData, &error)
+        guard let decryptedData else {
+            throw NiftyRSAError.decryptFailed(error: error?.takeRetainedValue())
+        }
+
+        return ClearMessage(data: decryptedData as Data)
+    }
+
+    /// Decrypts an encrypted message with a public key and returns a clear message.
+    ///
+    /// - Parameters:
+    ///   - key: Public key to decrypt the message with
+    ///   - algorithm: Algorithm to use during the decryption
+    /// - Returns: Clear message
+    /// - Throws: NiftyRSAError
+    public func decrypted(with key: NiftyRSAPublicKey, algorithm: Algorithm = .rsaEncryptionPKCS1) throws -> ClearMessage {
         var error: Unmanaged<CFError>?
         let decryptedData = SecKeyCreateDecryptedData(key.reference, algorithm, data as CFData, &error)
         guard let decryptedData else {
