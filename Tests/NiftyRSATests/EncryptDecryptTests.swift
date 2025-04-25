@@ -162,7 +162,7 @@ class EncryptDecryptTests: XCTestCase {
 
             while offset < totalSize {
                 let chunkSize = offset + uploadChunkSize > totalSize ? totalSize - offset : uploadChunkSize
-                let clearChunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
+                let clearChunk = Data(bytesNoCopy: mutRawPointer + offset, count: chunkSize, deallocator: Data.Deallocator.none)
 
                 let clearMessage = ClearMessage(data: clearChunk)
                 let encryptedChunk = try clearMessage.encrypted(with: publicKey)
