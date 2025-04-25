@@ -146,4 +146,39 @@ class EncryptDecryptTests: XCTestCase {
             XCTAssertEqual(decrypted.data, data)
         }
     }
+
+    func test_blocks() throws {
+        let clearData = TestUtils.randomData(count: 2345)
+        let publicKey = try NiftyRSAPublicKey(reference: publicKey.reference)
+        let blockSize = publicKey.blockSize() - 11
+
+        var encrypted = Data()
+
+        try clearData.withUnsafeBytes { u8Ptr in
+            let mutRawPointer = UnsafeMutableRawPointer(mutating: u8Ptr)
+            let uploadChunkSize = blockSize
+            let totalSize = clearData.count
+            var offset = 0
+
+            while offset < totalSize {
+                let chunkSize = offset + uploadChunkSize > totalSize ? totalSize - offset : uploadChunkSize
+                let clearChunk = Data(bytesNoCopy: mutRawPointer+offset, count: chunkSize, deallocator: Data.Deallocator.none)
+
+                let clearMessage = ClearMessage(data: clearChunk)
+                let encryptedChunk = try clearMessage.encrypted(with: publicKey)
+
+                encrypted.append(encryptedChunk.data)
+
+                offset += chunkSize
+            }
+        }
+    }
+}
+
+extension Data {
+    mutating func append(data: Data, offset: Int, size: Int) {
+        let start = data.startIndex + offset
+        let end = start + size
+        self.append(data[start..<end])
+    }
 }

@@ -31,6 +31,10 @@ public class NiftyRSAPublicKey: Key {
         return pem
     }
 
+    public func blockSize() -> Int {
+        SecKeyGetBlockSize(reference)
+    }
+
     /// Creates a public key with a keychain key reference.
     /// This initializer will throw if the provided key reference is not a public RSA key.
     ///
